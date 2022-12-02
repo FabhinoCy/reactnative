@@ -1,15 +1,17 @@
 import React from "react"
-import {Text, View, Image, Button, StyleSheet} from "react-native";
+import {Text, View, Image, Button, StyleSheet, AsyncStorage} from "react-native";
 
 function Details({route}) {
 
     const item= route.params.item
 
-    // const ajouterFavoris = () => {
-    //     console.log('ajouterFavoris')
-    //     localStorage.setItem('favoris', 'Fabien');
-    //     console.log(localStorage)
-    // }
+    const ajouterFavoris = async () => {
+        let students = [];
+        students.push({name: item.name,gender:item.gender});
+        console.log(students);
+        await AsyncStorage.setItem('favoris', JSON.stringify(students));
+        console.log('token', await AsyncStorage.getItem('favoris'));
+    }
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -17,7 +19,7 @@ function Details({route}) {
             <Text style={styles.nom}>{item.name}</Text>
             <Text>{item.status === 'Alive' ? 'Vivant' : 'Mort'} - {item.species === 'Human' ? 'Humain' : 'Alien'}</Text>
             <Text>{item.gender === 'Male' ? 'Masculin' : 'Féminin'}</Text>
-            {/*<Button title="Ajouter aux favoris" onPress={ajouterFavoris} />*/}
+            <Button title="Ajouter aux favoris" onPress={ajouterFavoris} />
         </View>
     );
 }
