@@ -1,15 +1,39 @@
 import React from "react"
-import {Text, View} from "react-native";
+import {Text, View, Image, Button, StyleSheet} from "react-native";
 
-function Details({navigation, route}) {
+function Details({route}) {
 
     const item= route.params.item
+
+    // const ajouterFavoris = () => {
+    //     console.log('ajouterFavoris')
+    //     localStorage.setItem('favoris', 'Fabien');
+    //     console.log(localStorage)
+    // }
+
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Récupération des données</Text>
-            <Text>{item.name}</Text>
+            <Image source={{uri: item.image}} style={styles.image}/>
+            <Text style={styles.nom}>{item.name}</Text>
+            <Text>{item.status === 'Alive' ? 'Vivant' : 'Mort'} - {item.species === 'Human' ? 'Humain' : 'Alien'}</Text>
+            <Text>{item.gender === 'Male' ? 'Masculin' : 'Féminin'}</Text>
+            {/*<Button title="Ajouter aux favoris" onPress={ajouterFavoris} />*/}
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    image: {
+        minWidth: '100%',
+        height: 350
+    },
+    nom: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#2b6e01',
+        textAlign: 'center',
+        marginTop: 10
+    }
+});
 
 export default Details;

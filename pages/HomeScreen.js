@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from "react";
 import axios from "axios";
-import {Text, View, Button, FlatList} from "react-native";
+import {Text, View, Button, FlatList, Image, StyleSheet} from "react-native";
 
 function HomeScreen({navigation}) {
     const [characterListData, setCharacterListData] = useState([])
@@ -16,14 +16,15 @@ function HomeScreen({navigation}) {
 
     const renderItem = useCallback(({ item }) => (
         <>
-            <View>
-                <Text >{item.name}</Text>
-                <Button title="Detail item" onPress={() => navigation.navigate('Details', {item: item})} />
+            <View style={styles.container}>
+                <Image source={{uri: item.image}} style={styles.image} />
+                <Text style={styles.nom}>{item.name}</Text>
+                <Button title="Voir" onPress={() => navigation.navigate('Details', {item: item})} />
             </View>
         </>
     ))
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View>
             <FlatList
                 data={characterListData}
                 extraData={characterListData}
@@ -44,5 +45,25 @@ function HomeScreen({navigation}) {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#89ce5e',
+        marginTop: 5,
+        margin: 5,
+        flex: 1,
+        alignItems: 'center'
+    },
+    image: {
+        minWidth: '100%',
+        height: 100
+    },
+    nom: {
+        textAlign: 'center',
+        color: '#2b6e01',
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+});
 
 export default HomeScreen;
