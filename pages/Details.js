@@ -38,10 +38,11 @@ function Details({route}) {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Image source={{uri: item.image}} style={styles.image}/>
             <Text style={styles.nom}>{item.name}</Text>
-            <Text>{item.status === 'Alive' ? 'Vivant' : 'Mort'} - {item.species === 'Human' ? 'Humain' : 'Alien'}</Text>
-            <Text>{item.gender === 'Male' ? 'Masculin' : 'Féminin'}</Text>
+            <Text style={styles.mort}>{item.status === 'Alive' ? 'Vivant' : 'Mort'} - {item.species === 'Human' ? 'Humain' : 'Alien'}</Text>
+            <Text style={styles.location}>{item.location.name}</Text>
+            <Text style={styles.genre}>{item.gender === 'Male' ? 'Masculin' : 'Féminin'}</Text>
             {
-                favoris === true ? '' : <Button title="Ajouter aux favoris" onPress={ajouterFavoris} />
+                favoris === true ? '' : <Button style={styles.button} title="Ajouter aux favoris" onPress={ajouterFavoris}/>
             }
         </View>
     );
@@ -55,8 +56,28 @@ const styles = StyleSheet.create({
     nom: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#2b6e01',
-        textAlign: 'center',
+        color: 'blue',
+        marginTop: 10
+    },
+    location: {
+        color: 'orange',
+        fontWeight: '700',
+        fontSize: 15,
+        marginTop: 10
+    },
+    mort: {
+        color: 'brown',
+        fontWeight: '700',
+        fontSize: 15,
+        marginTop: 10
+    },
+    genre: {
+        // couleur avec dégradé
+        color: 'green',
+        marginTop: 10,
+    },
+    button: {
+        display: 'block',
         marginTop: 10
     }
 });
