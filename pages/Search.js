@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {View, Text, TextInput, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import axios from 'axios';
-import { FlatList } from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 
 const Search = ({ navigation }) => {
     const [characters, setCharacters] = useState([]);
@@ -46,7 +46,7 @@ const Search = ({ navigation }) => {
                                 style={styles.characterImage}
                                 source={{ uri: item.image }}
                             />
-                            <Text style={styles.characterName}>{item.name}</Text>
+                            <Text style={styles.characterName}>{item.name} - {item.species}</Text>
                         </View>
                     </TouchableOpacity>
                 )}
@@ -80,12 +80,12 @@ const styles = StyleSheet.create({
     characterContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        margin: 15,
+        margin: 10,
     },
     characterImage: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
+        width: 60,
+        height: 60,
+        borderRadius: 5,
         marginRight: 15,
     },
     characterName: {
