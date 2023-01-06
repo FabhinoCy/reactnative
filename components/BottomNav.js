@@ -3,6 +3,10 @@ import {Image} from "react-native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import characterStack from "../pages/CharacterStack";
 import Favoris from "../pages/Favoris";
+import Search from "../pages/Search";
+import listeLogo from '../assets/img/liste.png';
+import favorisLogo from '../assets/img/star.png';
+import searchLogo from "../assets/img/loupe.png";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,9 +19,7 @@ function BottomNav () {
                     return (
                         <Image
                             style={{ width: size, height: size }}
-                            source={{
-                                uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Burger_King_logo_%281999%29.svg/2024px-Burger_King_logo_%281999%29.svg.png',
-                            }}
+                            source={listeLogo}
                         />
                     );
                 }
@@ -28,9 +30,18 @@ function BottomNav () {
                     return (
                         <Image
                             style={{ width: size, height: size }}
-                            source={{
-                                uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Burger_King_logo_%281999%29.svg/2024px-Burger_King_logo_%281999%29.svg.png',
-                            }}
+                            source={favorisLogo}
+                        />
+                    );
+                }
+            }} />
+            <Tab.Screen name="Search" component={Search} options={{
+                title: 'Search',
+                tabBarIcon: ({size}) => {
+                    return (
+                        <Image
+                            style={{ width: size, height: size }}
+                            source={searchLogo}
                         />
                     );
                 }
