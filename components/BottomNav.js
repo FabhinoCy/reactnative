@@ -7,6 +7,8 @@ import Search from "../pages/Search";
 import listeLogo from '../assets/img/liste.png';
 import favorisLogo from '../assets/img/star.png';
 import searchLogo from "../assets/img/loupe.png";
+import profilLogo from '../assets/img/user.png';
+import Profil from "../pages/Profil";
 
 const Tab = createBottomTabNavigator();
 
@@ -42,6 +44,17 @@ function BottomNav () {
                         <Image
                             style={{ width: size, height: size }}
                             source={searchLogo}
+                        />
+                    );
+                }
+            }} />
+            <Tab.Screen name="Profil" component={Profil} options={{
+                title: 'Profil',
+                tabBarIcon: ({size}) => {
+                    return (
+                        <Image
+                            style={{ width: size, height: size }}
+                            source={profilLogo}
                         />
                     );
                 }
