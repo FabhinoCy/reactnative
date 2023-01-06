@@ -1,75 +1,96 @@
-import React, {useState, useEffect} from "react";
-import {FlatList, Text, View, TextInput} from "react-native";
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import axios from 'axios';
+import { FlatList } from 'react-native-gesture-handler';
 
-function Search() {
-    const [filterData, setFilterData] = useState([]);
-    const [masterData, setMasterData] = useState([]);
-    const [search, setSearch] = useState('');
+const Search = ({ navigation }) => {
+    const [characters, setCharacters] = useState([]);
+    const [offset, setOffset] = useState(0);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const fetchCharacters = async searchTerm => {
+        try {
+            const response = await axios.get(`https://rickandmortyapi.com/api/character/?name=${searchTerm}`);
+            setCharacters(response.data.results);
+            setOffset(response.data.info.next)
+        } catch (error) {
+        }
+    };
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchCharacters(searchTerm);
+    }, [searchTerm]);
 
-    const fetchData = () => {
-        const apiURL = "https://rickandmortyapi.com/api/character";
-        fetch(apiURL)
-            .then((response) => response.json())
-            .then((json) => {
-                setFilterData(json.results);
-                setMasterData(json.results);
-            }).catch((error) => {
-            console.error(error);
-        });
-    }
-
-    const searchFilter = (text) => {
-        if (text) {
-            const newData = masterData.filter((item) => {
-                const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
-                const textData = text.toUpperCase();
-                return itemData.indexOf(textData) > -1;
-            });
-            setFilterData(newData);
-            setSearch(text);
-        } else {
-            setFilterData(masterData);
-            setSearch(text);
-        }
-    }
-
-    const ItemView = ({item}) => {
-        return (
-            <Text>
-                {item.id}{'. '}{item.name.toUpperCase()}
-            </Text>
-        );
-    }
-
-    const ItemSeparatorView = () => {
-        return (
-            <View
-                style={{
-                    height: 0.5,
-                    width: '100%',
-                    backgroundColor: '#c8c8c8',
-                }}
-            />
-        );
-    }
+    const navigateToDetail = item => {
+        navigation.navigate('Details', { item });
+    };
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Search</Text>
-            <TextInput
-                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                onChangeText={(text) => searchFilter(text)}
-                value={search}
-                underlineColorAndroid="transparent"
-                placeholder="Search Here"
+        <SafeAreaView>
+            <View style={styles.searchContainer}>
+                <TextInput
+                    style={styles.searchInput}
+                    onChangeText={text => setSearchTerm(text)}
+                    value={searchTerm}
+                    placeholder="Rechercher un personnage"
+                />
+            </View>
+            <FlatList
+                data={characters}
+                extraData={characters}
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => navigateToDetail(item)}>
+                        <View style={styles.characterContainer}>
+                            <Image
+                                style={styles.characterImage}
+                                source={{ uri: item.image }}
+                            />
+                            <Text style={styles.characterName}>{item.name}</Text>
+                        </View>
+                    </TouchableOpacity>
+                )}
+                keyExtractor={item => item.id}
+                showsVerticalScrollIndicator={false}
+                onEndReachedThreshold={0.5}
+                onEndReached={() => {
+                    if (offset) {
+                        axios.get(offset)
+                            .then(response => {
+                                setCharacters([...characters, ...response.data.results]);
+                                setOffset(response.data.info.next)
+                            })
+                    }
+                }}
             />
-            <FlatList data={filterData} keyExtractor={(item, index) => index.toString()} ItemSeparatorComponent={ItemSeparatorView} renderItem={ItemView}/>
-        </View>
+        </SafeAreaView>
     );
-}
+};
+
+const styles = StyleSheet.create({
+    searchContainer: {
+        backgroundColor: '#f0f0f0',
+        padding: 15,
+    },
+    searchInput: {
+        backgroundColor: 'white',
+        borderRadius: 5,
+        padding: 10,
+    },
+    characterContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        margin: 15,
+    },
+    characterImage: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        marginRight: 15,
+    },
+    characterName: {
+        fontSize: 16,
+    },
+});
 
 export default Search;
