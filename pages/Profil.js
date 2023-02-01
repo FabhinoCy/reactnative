@@ -1,12 +1,33 @@
 import React, {useState, useEffect} from "react";
-import {View, Text, TextInput, Button, StyleSheet, AsyncStorage} from "react-native";
+import {View, Text, TextInput, Button, StyleSheet, AsyncStorage, TouchableOpacity} from "react-native";
+import { Image, Platform } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import imagePicto from "../assets/img/photo.png";
 
 function Profil({navigation}) {
-    const [firstName, setFirstName]         = useState('');
-    const [lastName, setLastName]           = useState('');
-    const [age, setAge]                     = useState('');
-    const [favoris, setFavoris]             = React.useState([]);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [age, setAge] = useState('');
+    const [favoris, setFavoris] = React.useState([]);
     const [favorisLength, setFavorisLength] = React.useState(0);
+    const [image, setImage] = useState(null);
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+            AsyncStorage.setItem('image', result.assets[0].uri);
+            console.log('toto')
+        }
+    };
 
     useEffect(() => {
         AsyncStorage.getItem('favoris').then((value) => {
@@ -14,11 +35,15 @@ function Profil({navigation}) {
         });
         setFavorisLength(favoris.length);
 
+        AsyncStorage.getItem('image').then((value) => {
+            setImage(value);
+        });
+
         const getData = async () => {
             try {
                 const firstName = await AsyncStorage.getItem('firstName');
-                const lastName  = await AsyncStorage.getItem('lastName');
-                const age       = await AsyncStorage.getItem('age');
+                const lastName = await AsyncStorage.getItem('lastName');
+                const age = await AsyncStorage.getItem('age');
                 if (firstName !== null && lastName !== null && age !== null) {
                     setFirstName(firstName);
                     setLastName(lastName);
@@ -43,11 +68,20 @@ function Profil({navigation}) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.Titre}>Mon Profil</Text>
+            {
+                image &&
+                <Image
+                    source={{ uri: image }}
+                    style={{width: 100, height: 100, borderRadius: 50}}
+                />
+            }
+            <TouchableOpacity style={styles.Button} onPress={pickImage}>
+                <Image source={imagePicto} style={styles.image} />
+            </TouchableOpacity>
             <Text style={styles.TextFavoris}>Nombre de favoris :
                 <Text style={styles.Favoris}>{favorisLength}</Text>
             </Text>
-            <Button title="Accéder aux favoris" onPress={() => navigation.navigate('Favoris')}/>
+            <Button title="Voir les favoris" onPress={() => navigation.navigate('Favoris')}/>
             <Text style={styles.Label}>Prénom</Text>
             <TextInput
                 style={styles.Input}
@@ -75,22 +109,22 @@ function Profil({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    Titre: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 20,
-        marginTop: 20,
-        color: 'blue'
+    Button: {
+        width: 40,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+        margin: 10
     },
     TextFavoris: {
         color: 'brown',
         padding: 10,
-        margin: 10
+        margin: 5
     },
     Favoris: {
         color: 'red',
-        fontSize: 18,
+        fontSize: 18
     },
     Input: {
         backgroundColor: 'white',
@@ -99,10 +133,22 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'blue',
         margin: 10,
+        width: 300,
+        height: 40
     },
     Label: {
         marginLeft: 10,
-        marginTop: 10,
+        marginTop: 7
+    },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    image: {
+        width: 40,
+        height: 40,
+        borderRadius: 50
     }
 });
 

@@ -33,7 +33,7 @@ function Favoris() {
                                 </>
                             )
                         }
-                    ) : <Text>Vous n'avez enregistré aucun favoris</Text>
+                    ) : <Text>Vous n'avez enregistré aucun favori</Text>
                 }
             </ScrollView>
         </View>
