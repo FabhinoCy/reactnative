@@ -3,7 +3,7 @@ import {Text, View, Image, Button, StyleSheet, AsyncStorage} from "react-native"
 
 function Details({route}) {
 
-    const item = route.params.item
+    const item                  = route.params.item
     const [favoris, setFavoris] = React.useState(false);
 
     React.useEffect(() => {
@@ -20,7 +20,7 @@ function Details({route}) {
     const ajouterFavoris = async () => {
         const favoris = await AsyncStorage.getItem('favoris');
         if (favoris !== null) {
-            const favorisParsed = JSON.parse(favoris);
+            const favorisParsed        = JSON.parse(favoris);
             const itemAlreadyInFavoris = favorisParsed.find((itemInFavoris) => itemInFavoris.id === item.id);
             if (itemAlreadyInFavoris) {
                 console.log('Déjà dans les favoris');

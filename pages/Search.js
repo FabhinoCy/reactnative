@@ -6,7 +6,7 @@ import {FlatList} from 'react-native-gesture-handler';
 
 const Search = ({ navigation }) => {
     const [characters, setCharacters] = useState([]);
-    const [offset, setOffset] = useState(0);
+    const [offset, setOffset]         = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
 
     const fetchCharacters = async searchTerm => {

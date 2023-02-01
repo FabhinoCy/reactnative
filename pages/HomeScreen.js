@@ -4,7 +4,7 @@ import {Text, View, Button, FlatList, Image, StyleSheet} from "react-native";
 
 function HomeScreen({navigation}) {
     const [characterListData, setCharacterListData] = useState([])
-    const [pagination, setPagination] = useState(0)
+    const [pagination, setPagination]               = useState(0)
 
     useEffect(() => {
         axios.get('https://rickandmortyapi.com/api/character')

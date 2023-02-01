@@ -3,7 +3,7 @@ import {AsyncStorage, Button, Image, StyleSheet, Text, View, ScrollView} from "r
 
 function Favoris() {
 
-    const [favoris, setFavoris] = React.useState([]);
+    const [favoris, setFavoris]             = React.useState([]);
     const [favorisLength, setFavorisLength] = React.useState(0);
 
     React.useEffect(() => {
@@ -14,10 +14,8 @@ function Favoris() {
     });
 
     const retirerItem = async (item) => {
-        // delete item from favoris
-        const favoris = await AsyncStorage.getItem('favoris');
-        // suppression de l'item
-        const favorisParsed = JSON.parse(favoris);
+        const favoris         = await AsyncStorage.getItem('favoris');
+        const favorisParsed   = JSON.parse(favoris);
         const favorisFiltered = await favorisParsed.filter((itemInFavoris) => itemInFavoris.id !== item.id);
         AsyncStorage.setItem('favoris', JSON.stringify(favorisFiltered));
     }
