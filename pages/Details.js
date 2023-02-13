@@ -9,7 +9,7 @@ function Details({route}) {
     React.useEffect(() => {
         AsyncStorage.getItem('favoris')
             .then((value) => {
-                const favorisParsed = JSON.parse(value);
+                const favorisParsed        = JSON.parse(value);
                 const itemAlreadyInFavoris = favorisParsed.find((itemInFavoris) => itemInFavoris.id === item.id);
                 if (itemAlreadyInFavoris) {
                     setFavoris(true);

@@ -25,18 +25,18 @@ function Favoris() {
             <ScrollView>
                 {
                     favorisLength !== 0 ? favoris.map((item) => {
-                            return (
-                                <>
-                                    <Text key={item.id} style={styles.nom}>{item.name}</Text>
-                                    <Image source={{uri: item.image}} style={styles.image}/>
-                                    <Button title="Supprimer des favoris" onPress={() => {retirerItem(item)}} />
-                                </>
-                            )
-                        }
-                    ) : <Text>Vous n'avez enregistré aucun favori</Text>
+                        return (
+                            <View key={item.id}>
+                                <Text style={styles.nom}>{item.name}</Text>
+                                <Image source={{uri: item.image}} style={styles.image} />
+                                <Button title="Supprimer des favoris" onPress={() => {retirerItem(item)}} />
+                            </View>
+                        );
+                    }) : <Text>Vous n'avez enregistré aucun favori</Text>
                 }
             </ScrollView>
         </View>
+
     );
 }
 
