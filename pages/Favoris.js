@@ -45,7 +45,7 @@ function Favoris() {
 const styles = StyleSheet.create({
     image: {
         minWidth: '70%',
-        height: 100
+        height: 200
     },
     nom: {
         fontSize: 18,
