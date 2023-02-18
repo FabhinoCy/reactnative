@@ -48,7 +48,7 @@ function HomeScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#89ce5e',
+        backgroundColor: '#08c4b6',
         marginTop: 5,
         margin: 5,
         flex: 1,
@@ -56,11 +56,11 @@ const styles = StyleSheet.create({
     },
     image: {
         minWidth: '100%',
-        height: 100
+        height: 120
     },
     nom: {
         textAlign: 'center',
-        color: '#2b6e01',
+        color: '#005076',
         fontSize: 16,
         fontWeight: 'bold'
     },

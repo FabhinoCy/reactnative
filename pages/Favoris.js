@@ -1,5 +1,5 @@
 import React from "react"
-import {AsyncStorage, Button, Image, StyleSheet, Text, View, ScrollView} from "react-native";
+import {AsyncStorage, Button, Image, StyleSheet, Text, View, ScrollView, TouchableOpacity} from "react-native";
 
 function Favoris() {
 
@@ -29,7 +29,9 @@ function Favoris() {
                             <View key={item.id}>
                                 <Text style={styles.nom}>{item.name}</Text>
                                 <Image source={{uri: item.image}} style={styles.image} />
-                                <Button title="Supprimer des favoris" onPress={() => {retirerItem(item)}} />
+                                <TouchableOpacity style={styles.button} onPress={() => {retirerItem(item)}}>
+                                    <Text style={styles.buttonText}>Supprimer des favoris</Text>
+                                </TouchableOpacity>
                             </View>
                         );
                     }) : <Text>Vous n'avez enregistré aucun favori</Text>
@@ -51,6 +53,20 @@ const styles = StyleSheet.create({
         color: 'green',
         textAlign: 'center',
         marginTop: 10
+    },
+    button: {
+        marginTop: 8,
+        backgroundColor: '#fc4100',
+        padding: 10,
+        borderRadius: 5,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
     }
 });
 

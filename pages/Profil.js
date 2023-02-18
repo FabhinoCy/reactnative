@@ -81,7 +81,9 @@ function Profil({navigation}) {
             <Text style={styles.TextFavoris}>Nombre de favoris :
                 <Text style={styles.Favoris}>{favorisLength}</Text>
             </Text>
-            <Button title="Voir les favoris" onPress={() => navigation.navigate('Favoris')}/>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Favoris')}>
+                <Text style={styles.buttonText}>Voir les favoris</Text>
+            </TouchableOpacity>
             <Text style={styles.Label}>Prénom</Text>
             <TextInput
                 style={styles.Input}
@@ -132,13 +134,13 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 1,
         borderColor: 'blue',
-        margin: 10,
+        margin: 8,
         width: 300,
         height: 40
     },
     Label: {
         marginLeft: 10,
-        marginTop: 7
+        marginTop: 5
     },
     container: {
         flex: 1,
@@ -149,6 +151,19 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 50
+    },
+    button: {
+        marginTop: 5,
+        backgroundColor: '#fc4100',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
     }
 });
 

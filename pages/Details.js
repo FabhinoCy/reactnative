@@ -1,5 +1,6 @@
 import React from "react";
-import {Text, View, Image, Button, StyleSheet, AsyncStorage} from "react-native";
+import {Text, View, Image, Button, StyleSheet, AsyncStorage, TouchableOpacity} from "react-native";
+import imagePicto from "../assets/img/photo.png";
 
 function Details({route}) {
 
@@ -42,7 +43,10 @@ function Details({route}) {
             <Text style={styles.location}>{item.location.name}</Text>
             <Text style={styles.genre}>{item.gender === 'Male' ? 'Masculin' : 'Féminin'}</Text>
             {
-                favoris === true ? '' : <Button style={styles.button} title="Ajouter aux favoris" onPress={ajouterFavoris}/>
+                favoris === true ? '' :
+                <TouchableOpacity style={styles.button} onPress={ajouterFavoris}>
+                    <Text style={styles.buttonText}>Ajouter aux favoris</Text>
+                </TouchableOpacity>
             }
         </View>
     );
@@ -57,28 +61,37 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: 'blue',
-        marginTop: 10
+        marginTop: 8
     },
     location: {
         color: 'orange',
         fontWeight: '700',
         fontSize: 15,
-        marginTop: 10
+        marginTop: 8
     },
     mort: {
         color: 'brown',
         fontWeight: '700',
         fontSize: 15,
-        marginTop: 10
+        marginTop: 8
     },
     genre: {
-        // couleur avec dégradé
         color: 'green',
-        marginTop: 10,
+        marginTop: 8
     },
     button: {
-        display: 'block',
-        marginTop: 10
+        marginTop: 8,
+        backgroundColor: '#fc4100',
+        padding: 10,
+        borderRadius: 5,
+        width: 200,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
     }
 });
 
