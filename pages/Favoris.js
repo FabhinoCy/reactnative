@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     nom: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: 'green',
+        color: 'blue',
         textAlign: 'center',
         marginTop: 10
     },

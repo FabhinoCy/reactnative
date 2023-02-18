@@ -25,7 +25,6 @@ function Profil({navigation}) {
         if (!result.canceled) {
             setImage(result.assets[0].uri);
             AsyncStorage.setItem('image', result.assets[0].uri);
-            console.log('toto')
         }
     };
 
@@ -38,7 +37,9 @@ function Profil({navigation}) {
         AsyncStorage.getItem('image').then((value) => {
             setImage(value);
         });
+    });
 
+    useEffect(() => {
         const getData = async () => {
             try {
                 const firstName = await AsyncStorage.getItem('firstName');
@@ -54,8 +55,8 @@ function Profil({navigation}) {
             }
         };
         getData();
-    });
-
+    }, []);
+    
     const saveData = async () => {
         try {
             await AsyncStorage.setItem('firstName', firstName);
